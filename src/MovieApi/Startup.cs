@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace MovieApi
 {
     public class Startup
     {
+        private readonly ILogger _logger = Log.ForContext<Startup>();
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,16 +25,13 @@ namespace MovieApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            _logger.Information("Start configure dependecies...");
+
             services.AddControllers();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostApplicationLifetime applicationLifetime)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
             app.UseRouting();
 
             app.UseAuthorization();
@@ -40,6 +39,11 @@ namespace MovieApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            applicationLifetime.ApplicationStarted.Register(() =>
+            {
+                _logger.Information("Service has been started");
             });
         }
     }
