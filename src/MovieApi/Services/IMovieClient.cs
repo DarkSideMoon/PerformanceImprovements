@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MovieApi.Services.Redis
+namespace MovieApi.Services
 {
-    public interface IRedisClient
+    public interface IMovieClient
     {
         Task<bool> SetMovie(Movie movie);
 

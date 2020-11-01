@@ -1,12 +1,11 @@
 ﻿using MovieModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieApi.Services.Redis
+namespace MovieApi.Services
 {
-    public class RedisClient : IRedisClient
+    public class MovieClient : IMovieClient
     {
         public Task<IEnumerable<Movie>> GetBatchMovie(int id)
         {
