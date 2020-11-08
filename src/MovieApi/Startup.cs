@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieApi.Configuration;
+using MovieApi.Infrastructure;
 using Serilog;
 
 namespace MovieApi
@@ -27,18 +24,40 @@ namespace MovieApi
         {
             _logger.Information("Start configure dependecies...");
 
+            var serviceConfig = Configuration.Get<ServiceConfiguration>();
+
             services.AddControllers();
+
+            // Registers health checks services
+            services.AddHealthChecks();
+
+            // Configure swagger
+            services.AddSwaggerService();
+
+            // Add memory cache
+            services.AddInMemoryStorage(serviceConfig.Redis.ConnectionString);
         }
 
         public void Configure(IApplicationBuilder app, IHostApplicationLifetime applicationLifetime)
         {
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseHealthChecks("/healthz");
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Service API V1");
+            });
+
+            app.UseHealthChecks("/liveness", new HealthCheckOptions
+            {
+                Predicate = (check) => check.Tags.Contains("health")
             });
 
             applicationLifetime.ApplicationStarted.Register(() =>

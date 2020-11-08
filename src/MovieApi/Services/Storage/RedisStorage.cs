@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using StackExchange.Redis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +9,13 @@ namespace MovieApi.Services.Storage
 {
     public class RedisStorage<TItem> : IStorage<TItem>
     {
+        private readonly IDistributedCache _redisCache;
+
+        public RedisStorage(IDistributedCache redisCache)
+        {
+            _redisCache = redisCache;
+        }
+
         public Task<TItem> Get(string key)
         {
             throw new NotImplementedException();
