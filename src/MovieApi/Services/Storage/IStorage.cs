@@ -10,10 +10,9 @@ namespace MovieApi.Services.Storage
         Task<TItem> Get(string key);
 
         Task<TItem> GetOrSet(string key, TItem item);
+
         Task SetBatch(string key, IEnumerable<TItem> items);
 
-        Task<IEnumerable<TItem>> GetBatch(string key);
-
-        Task<IEnumerable<TItem>> GetOrSetBatch(string key, IEnumerable<TItem> item);
+        Task<IEnumerable<TItem>> GetBatch(IEnumerable<string> keys);
     }
 }

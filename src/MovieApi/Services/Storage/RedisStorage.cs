@@ -7,43 +7,55 @@ using System.Threading.Tasks;
 
 namespace MovieApi.Services.Storage
 {
-    public class RedisStorage<TItem> : IStorage<TItem>
+    public class RedisStorage<String> : IStorage<string>
     {
         private readonly IDistributedCache _redisCache;
+        private readonly IRedisConnectionFactory _factory;
 
-        public RedisStorage(IDistributedCache redisCache)
+        public RedisStorage(IDistributedCache redisCache, IRedisConnectionFactory factory)
         {
             _redisCache = redisCache;
+            _factory = factory;
         }
 
-        public Task<TItem> Get(string key)
+        public async Task<string> Get(string key) => await _redisCache.GetStringAsync(key);
+
+        public async Task Set(string key, string item) => await _redisCache.SetStringAsync(key, item);
+
+        public async Task<string> GetOrSet(string key, string item)
         {
-            throw new NotImplementedException();
+            var value = await _redisCache.GetStringAsync(key);
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            await _redisCache.SetStringAsync(key, item);
+            return item;
         }
 
-        public Task<IEnumerable<TItem>> GetBatch(string key)
+        public async Task<IEnumerable<string>> GetBatch(IEnumerable<string> keys)
         {
-            throw new NotImplementedException();
+            var redis = await _factory.ConnectAsync();
+            var batch = redis.GetDatabase().CreateBatch();
+
+            var getRedisBatchTasks = keys.Select(x => batch.StringGetAsync(new RedisKey(x)));
+            var result = await Task.WhenAll(getRedisBatchTasks);
+
+            return result.Select(x => x.ToString());
         }
 
-        public Task<TItem> GetOrSet(string key, TItem item)
+        public async Task SetBatch(string key, IEnumerable<string> items)
         {
-            throw new NotImplementedException();
-        }
+            var redis = await _factory.ConnectAsync();
+            var batch = redis.GetDatabase().CreateBatch();
 
-        public Task<IEnumerable<TItem>> GetOrSetBatch(string key, IEnumerable<TItem> item)
-        {
-            throw new NotImplementedException();
-        }
+            var setRedisBatchTasks = items
+                .Select(x => batch.StringSetAsync(
+                    new RedisKey(key), new RedisValue(x), TimeSpan.FromMinutes(5), when: When.Always, flags: CommandFlags.FireAndForget));
 
-        public Task Set(string key, TItem item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetBatch(string key, IEnumerable<TItem> items)
-        {
-            throw new NotImplementedException();
+            await Task.WhenAll(setRedisBatchTasks);
         }
     }
 }
