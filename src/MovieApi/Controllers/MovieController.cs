@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieApi.Services;
 using MovieModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace MovieApi.Controllers
 {
@@ -10,28 +10,61 @@ namespace MovieApi.Controllers
     [Route("[controller]")]
     public class MovieController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<Movie> Get()
+        private readonly IMovieClient _movieClient;
+
+        public MovieController(IMovieClient movieClient)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 50).Select(index => new Movie
-            {
-                Id = 1,
-                ImdbId = "2",
-                Budget = 1000,
-                Revenue = 100000,
-                Popularity = 10,
-                TagLine = "test",
-                VoteAverage = 5,
-                VoteCount = 1000,
-                OriginalLanguage = "ua",
-                OriginalTitle = "Test",
-                Title = "Test Cool",
-                Overview = "Cool",
-                ReleaseDateTime = DateTime.Now,
-                State = "Released"
-            })
-            .ToArray();
+            _movieClient = movieClient;
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMovie(string id)
+        {
+            return Ok(await _movieClient.GetMovie(id));
+        }
+
+        [HttpPost("batch/get")]
+        public async Task<IActionResult> GetBatchMovie(IEnumerable<string> ids)
+        {
+            return Ok(await _movieClient.GetBatchMovie(ids));
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> SetMovie(Movie movie)
+        {
+            await _movieClient.SetMovie(movie);
+            return Ok();
+        }
+
+        [HttpPost("batch/set")]
+        public async Task<IActionResult> SetBatchMovie(IEnumerable<Movie> movies)
+        {
+            await _movieClient.SetBatchMovie(movies);
+            return Ok();
+        }
+
+        //[HttpGet]
+        //public IEnumerable<Movie> Get()
+        //{
+        //    var rng = new Random();
+        //    return Enumerable.Range(1, 50).Select(index => new Movie
+        //    {
+        //        Id = 1,
+        //        ImdbId = "2",
+        //        Budget = 1000,
+        //        Revenue = 100000,
+        //        Popularity = 10,
+        //        TagLine = "test",
+        //        VoteAverage = 5,
+        //        VoteCount = 1000,
+        //        OriginalLanguage = "ua",
+        //        OriginalTitle = "Test",
+        //        Title = "Test Cool",
+        //        Overview = "Cool",
+        //        ReleaseDateTime = DateTime.Now,
+        //        State = "Released"
+        //    })
+        //    .ToArray();
+        //}
     }
 }

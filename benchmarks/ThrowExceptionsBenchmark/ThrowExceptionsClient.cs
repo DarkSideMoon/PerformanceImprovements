@@ -32,11 +32,9 @@ namespace ThrowExceptionsBenchmark
             try
             {
                 int result = int.Parse(Name);
-                //Console.WriteLine($"Result of {nameof(ParseIntWithException)} is {result}");
             }
             catch (FormatException ex)
             {
-                //Console.WriteLine($"Exception of {nameof(ParseIntWithException)} {ex}");
             }
         }
 
@@ -46,11 +44,9 @@ namespace ThrowExceptionsBenchmark
             if (int.TryParse(Name, out var result))
             {
                 // Success flow
-                //Console.WriteLine($"Success flow {nameof(ParseIntWithNonException)} is {result}");
             }
             {
                 // Fail flow
-                //Console.WriteLine($"Fail flow of {nameof(ParseIntWithNonException)} is {result}");
             }
         }
 

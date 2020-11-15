@@ -2,7 +2,7 @@
 
 namespace MovieModel
 {
-    public class Movie
+    public class Movie : IStorageKey
     {
         public int Id { get; set; }
 
@@ -31,5 +31,7 @@ namespace MovieModel
         public DateTime? ReleaseDateTime { get; set; }
 
         public string State { get; set; }
+
+        public string Key { get => Id.ToString(); }
     }
 }

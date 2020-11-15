@@ -6,12 +6,12 @@ namespace MovieApi.Services
 {
     public interface IMovieClient
     {
-        Task<bool> SetMovie(Movie movie);
+        Task SetMovie(Movie movie);
 
-        Task<Movie> GetMovie(int id);
+        Task<Movie> GetMovie(string key);
 
-        Task<bool> SetBatchMovie(IEnumerable<Movie> movie);
+        Task SetBatchMovie(IEnumerable<Movie> movies);
 
-        Task<IEnumerable<Movie>> GetBatchMovie(int id);
+        Task<IEnumerable<Movie>> GetBatchMovie(IEnumerable<string> keys);
     }
 }

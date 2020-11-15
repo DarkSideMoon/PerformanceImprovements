@@ -26,6 +26,8 @@ namespace MovieApi
 
             var serviceConfig = Configuration.Get<ServiceConfiguration>();
 
+            services.Configure<RedisConfiguration>(Configuration.GetSection("redis"));
+
             services.AddControllers();
 
             // Registers health checks services
@@ -36,6 +38,9 @@ namespace MovieApi
 
             // Add memory cache
             services.AddInMemoryStorage(serviceConfig.Redis.ConnectionString);
+
+            // Add client services
+            services.AddClientServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostApplicationLifetime applicationLifetime)
