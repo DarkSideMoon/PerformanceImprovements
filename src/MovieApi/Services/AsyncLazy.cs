@@ -9,7 +9,7 @@ namespace MovieApi.Services
     /// Source: https://devblogs.microsoft.com/pfxteam/asynclazyt/
     /// </summary>
     /// <example>
-    /// static AsyncLazy<string> m_data = new AsyncLazy<string>(async delegate
+    /// static AsyncLazy<string> m_data = new AsyncLazy</string>(async delegate
     ///    {
     ///        WebClient client = new WebClient();
     ///        return (await client.DownloadStringTaskAsync(someUrl)).ToUpper();

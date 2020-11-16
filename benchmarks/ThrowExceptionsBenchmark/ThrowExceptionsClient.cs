@@ -33,7 +33,7 @@ namespace ThrowExceptionsBenchmark
             {
                 int result = int.Parse(Name);
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
             }
         }
