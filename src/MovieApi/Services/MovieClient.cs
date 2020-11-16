@@ -21,5 +21,9 @@ namespace MovieApi.Services
         public async Task SetBatchMovie(IEnumerable<Movie> movies) => await _storageMovie.SetBatch(movies);
 
         public async Task SetMovie(Movie movie) => await _storageMovie.Set(movie);
+
+        public async Task PingPipelineRedisAsync(int countOfPing) => await _storageMovie.PingPipelineAsync(countOfPing);
+
+        public async Task PingRedisAsync(int countOfPing) => await _storageMovie.PingAsync(countOfPing);
     }
 }

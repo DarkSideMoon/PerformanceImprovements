@@ -13,5 +13,9 @@ namespace MovieApi.Services
         Task SetBatchMovie(IEnumerable<Movie> movies);
 
         Task<IEnumerable<Movie>> GetBatchMovie(IEnumerable<string> keys);
+
+        Task PingPipelineRedisAsync(int countOfPing);
+
+        Task PingRedisAsync(int countOfPing);
     }
 }

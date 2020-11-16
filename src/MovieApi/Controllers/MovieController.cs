@@ -2,6 +2,7 @@
 using MovieApi.Services;
 using MovieModel;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace MovieApi.Controllers
@@ -41,6 +42,32 @@ namespace MovieApi.Controllers
         {
             await _movieClient.SetBatchMovie(movies);
             return Ok();
+        }
+
+        [HttpGet("ping/{count}")]
+        public async Task<IActionResult> PingRedis(int count)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            await _movieClient.PingRedisAsync(count);
+
+            stopwatch.Stop();
+
+            return Ok(stopwatch.ElapsedMilliseconds);
+        }
+
+        [HttpGet("ping/pipeline/{count}")]
+        public async Task<IActionResult> PingPipelineRedis(int count)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            await _movieClient.PingRedisAsync(count);
+
+            stopwatch.Stop();
+
+            return Ok(stopwatch.ElapsedMilliseconds);
         }
 
         //[HttpGet]

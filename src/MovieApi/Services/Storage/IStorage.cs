@@ -18,6 +18,10 @@ namespace MovieApi.Services.Storage
 
         Task<IEnumerable<TItem>> GetBatch(IEnumerable<string> keys);
 
+        Task PingPipelineAsync(int countOfPing);
+
+        Task PingAsync(int countOfPing);
+
         string BuildKey(string key);
     }
 }

@@ -21,6 +21,11 @@ namespace MovieApi.Services.Storage
             _factory = factory;
         }
 
+        /// <summary>
+        /// Implementation with IDistributedCache
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public async Task<TItem> Get(string key)
         {
             var stringObj = await _redisCache.GetStringAsync(BuildKey(key));
@@ -32,6 +37,11 @@ namespace MovieApi.Services.Storage
             return default;
         }
 
+        /// <summary>
+        /// Implementation with IDistributedCache
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public async Task Set(TItem item)
         {
             var serializedStringObj = JsonConvert.SerializeObject(item);
@@ -40,6 +50,12 @@ namespace MovieApi.Services.Storage
             await _redisCache.SetAsync(BuildKey(item.Key), byteArray);
         }
 
+        /// <summary>
+        /// Implementation with IDistributedCache
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public async Task<TItem> GetOrSet(string key, TItem item)
         {
             var byteArrayObj = await _redisCache.GetAsync(key);
@@ -65,7 +81,6 @@ namespace MovieApi.Services.Storage
             var testTasks = batch.StringGetAsync(keys.Select(x => new RedisKey(BuildKey(x))).ToArray());
             var result1 = await Task.WhenAll(testTasks);
 
-
             var getRedisBatchTasks = keys.Select(x => batch.StringGetAsync(new RedisKey(BuildKey(x))));
 
             batch.Execute();
@@ -75,6 +90,11 @@ namespace MovieApi.Services.Storage
             return result.Select(x => JsonConvert.DeserializeObject<TItem>(x));
         }
 
+        /// <summary>
+        /// Example of redis batch
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
         public async Task SetBatch(IEnumerable<TItem> items)
         {
             var redis = await _factory.ConnectAsync();
@@ -89,11 +109,48 @@ namespace MovieApi.Services.Storage
             await Task.WhenAll(setRedisBatchTasks);
         }
 
-        public Task SetPipeline(IEnumerable<TItem> items)
+        /// <summary>
+        /// Example of redis pipelining
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public async Task SetPipeline(IEnumerable<TItem> items)
         {
-            throw new NotImplementedException();
+            var redis = await _factory.ConnectAsync();
+            var redisDb = redis.GetDatabase();
+
+            var setRedisBatchTasks = items
+                .Select(x => redisDb.StringSetAsync(
+                    new RedisKey(BuildKey(x.Key)), new RedisValue(JsonConvert.SerializeObject(x)), TimeSpan.FromMinutes(5)));
+            
+            await Task.WhenAll(setRedisBatchTasks);
         }
 
         public string BuildKey(string key) => $"{typeof(TItem).Name}_{key}";
+
+        public async Task PingPipelineAsync(int countOfPing)
+        {
+            var redis = await _factory.ConnectAsync();
+            var redisDb = redis.GetDatabase();
+
+            for (int i = 0; i < countOfPing; i++)
+            {
+                await redisDb.PingAsync();
+            }
+        }
+
+        public async Task PingAsync(int countOfPing)
+        {
+            var redis = await _factory.ConnectAsync();
+            var redisDb = redis.GetDatabase();
+
+            var pingRedisTasks = new List<Task>();
+            for (int i = 0; i < countOfPing; i++)
+            {
+                pingRedisTasks.Add(redisDb.PingAsync());
+            }
+
+            await Task.WhenAll(pingRedisTasks);
+        }
     }
 }
