@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MovieApi.Request;
-using MovieApi.Response;
+using MovieModel.Rest;
 
 namespace MovieApi.Controllers
 {
@@ -8,7 +7,7 @@ namespace MovieApi.Controllers
     [Route("[controller]")]
     public class GreeterController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get(HelloRequest request) => Ok(new HelloResponse { Message = "Hello " + request.Name });
+        [HttpGet("{name}")]
+        public IActionResult Get(string name) => Ok(new HelloResponse { Message = "Hello " + name });
     }
 }

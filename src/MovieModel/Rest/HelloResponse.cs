@@ -1,4 +1,4 @@
-﻿namespace MovieApi.Response
+﻿namespace MovieModel.Rest
 {
     public class HelloResponse
     {
