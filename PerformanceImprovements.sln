@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieModel", "src\MovieMode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThrowExceptionsBenchmark", "benchmarks\ThrowExceptionsBenchmark\ThrowExceptionsBenchmark.csproj", "{9B8ED122-2E81-4DE4-86A1-CE2AC22A64FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisStorageBenchmark", "benchmarks\RedisStorageBenchmark\RedisStorageBenchmark.csproj", "{C51053FD-D05F-4C83-991E-3242933C3F58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisStorageBenchmark", "benchmarks\RedisStorageBenchmark\RedisStorageBenchmark.csproj", "{C51053FD-D05F-4C83-991E-3242933C3F58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieGrpc", "src\MovieGrpc\MovieGrpc.csproj", "{B112E0F4-2028-4BDF-A55F-7414BF5EC10F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C51053FD-D05F-4C83-991E-3242933C3F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C51053FD-D05F-4C83-991E-3242933C3F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C51053FD-D05F-4C83-991E-3242933C3F58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B112E0F4-2028-4BDF-A55F-7414BF5EC10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B112E0F4-2028-4BDF-A55F-7414BF5EC10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B112E0F4-2028-4BDF-A55F-7414BF5EC10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B112E0F4-2028-4BDF-A55F-7414BF5EC10F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{9334FA80-D085-451E-AAF1-3103A6AED80B} = {61DE935B-8880-478C-BB2B-5B6E04F91EA4}
 		{9B8ED122-2E81-4DE4-86A1-CE2AC22A64FF} = {0F4DF69F-BA0F-4217-A313-CE544626E11D}
 		{C51053FD-D05F-4C83-991E-3242933C3F58} = {0F4DF69F-BA0F-4217-A313-CE544626E11D}
+		{B112E0F4-2028-4BDF-A55F-7414BF5EC10F} = {61DE935B-8880-478C-BB2B-5B6E04F91EA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C51FD12-31A5-4B4F-B60D-884174079F37}
