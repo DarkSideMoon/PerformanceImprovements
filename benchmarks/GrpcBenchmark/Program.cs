@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BenchmarkDotNet.Running;
+using System;
 
 namespace GrpcBenchmark
 {
@@ -6,11 +7,13 @@ namespace GrpcBenchmark
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //Console.WriteLine("Hello World!");
 
-            var test = new GrpcClient();
-            test.Setup();
-            test.SayHello().GetAwaiter().GetResult();
+            BenchmarkRunner.Run<GrpcClient>();
+
+            //var test = new GrpcClient();
+            //test.Setup();
+            //test.SayHello().GetAwaiter().GetResult();
         }
     }
 }
