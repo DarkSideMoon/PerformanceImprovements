@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieGrpc.Services;
 
 namespace MovieGrpc
 {
@@ -25,6 +26,7 @@ namespace MovieGrpc
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<MovieServiceGrpc>();
 
                 endpoints.MapGet("/", async context =>
                 {

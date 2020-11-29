@@ -9,11 +9,11 @@ namespace GrpcBenchmark
         {
             //Console.WriteLine("Hello World!");
 
-            //BenchmarkRunner.Run<GrpcClient>();
+            BenchmarkRunner.Run<GrpcClient>();
 
-            var test = new GrpcClient();
-            test.Setup();
-            test.SayHello().GetAwaiter().GetResult();
+            //var test = new GrpcClient();
+            //test.Setup();
+            //test.GrpcMovie().GetAwaiter().GetResult();
         }
     }
 }
