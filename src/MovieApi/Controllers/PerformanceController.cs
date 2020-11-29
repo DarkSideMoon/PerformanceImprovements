@@ -15,7 +15,7 @@ namespace MovieApi.Controllers
         public IEnumerable<Movie> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(20, 20).Select(index => new Movie
+            return Enumerable.Range(200, 200).Select(index => new Movie
             {
                 Id = 1,
                 ImdbId = "2",

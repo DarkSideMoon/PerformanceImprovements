@@ -35,7 +35,7 @@ namespace MovieGrpc.Services
         public override Task<MoviesResponse> GetMovies(MovieRequest request, ServerCallContext context)
         {
             var result = new MoviesResponse();
-            result.Movies.AddRange(Enumerable.Range(20, 20)
+            result.Movies.AddRange(Enumerable.Range(200, 200)
                 .Select(index => new MovieResponse
                 {
                     Id = 1,
