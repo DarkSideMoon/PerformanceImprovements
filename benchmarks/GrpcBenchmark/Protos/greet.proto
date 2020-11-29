@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "MovieGrpcClient";
+option csharp_namespace = "MovieGrpc";
 
 package greet;
 

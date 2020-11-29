@@ -9,11 +9,12 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
     <PackageReference Include="Google.Protobuf" Version="3.14.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.33.1" />
-    <PackageReference Include="Grpc.Tools" Version="2.33.1"/>
+    <PackageReference Include="Grpc.Tools" Version="2.33.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Protobuf Include="Protos\greet.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\movie.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

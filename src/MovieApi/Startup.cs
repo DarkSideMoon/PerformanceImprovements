@@ -24,6 +24,8 @@ namespace MovieApi
         {
             _logger.Information("Start configure dependecies...");
 
+            Log.Information("Test");
+
             var serviceConfig = Configuration.Get<ServiceConfiguration>();
 
             services.Configure<RedisConfiguration>(Configuration.GetSection("redis"));

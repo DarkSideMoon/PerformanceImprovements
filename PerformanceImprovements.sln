@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisStorageBenchmark", "be
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieGrpc", "src\MovieGrpc\MovieGrpc.csproj", "{B112E0F4-2028-4BDF-A55F-7414BF5EC10F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestBenchmark", "benchmarks\RestBenchmark\RestBenchmark.csproj", "{5455C468-DFB6-4886-A887-8C533AC1BF26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestBenchmark", "benchmarks\RestBenchmark\RestBenchmark.csproj", "{5455C468-DFB6-4886-A887-8C533AC1BF26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcBenchmark", "benchmarks\GrpcBenchmark\GrpcBenchmark.csproj", "{7341227F-0B26-41B3-BC82-EC124CB11B54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcBenchmark", "benchmarks\GrpcBenchmark\GrpcBenchmark.csproj", "{7341227F-0B26-41B3-BC82-EC124CB11B54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

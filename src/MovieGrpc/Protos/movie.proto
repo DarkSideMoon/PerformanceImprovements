@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option csharp_namespace = "MovieGrpc";
+
+package movie;
+
+service MovieService {
+	rpc GetMovie(MovieRequest) returns (MovieResponse);
+	rpc GetMovies(MovieRequest) returns (MoviesResponse);
+}
+
+message MoviesResponse {
+	repeated MovieResponse Movies = 1;
+}
+
+message MovieResponse {
+	int32 Id = 1;
+	string ImdbId = 2;
+	double Budget = 3;
+	double Revenue = 4;
+	double Popularity = 5;
+	string TagLine = 6;
+	double VoteAverage = 7;
+	int32 VoteCount = 8;
+	string OriginalLanguage = 9;
+	string OriginalTitle = 10;
+	string Title = 11;
+	string Overview = 12;
+	int64 ReleaseDateTime = 13;
+	string State = 14;
+}
+
+message MovieRequest {
+
+}

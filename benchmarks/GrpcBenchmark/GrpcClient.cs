@@ -1,10 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Grpc.Net.Client;
-using System;
 using System.Threading.Tasks;
-using MovieGrpcClient;
-using static MovieGrpcClient.Greeter;
-using System.Net.Http;
+using MovieGrpc;
+using static MovieGrpc.Greeter;
+using static MovieGrpc.MovieService;
 
 namespace GrpcBenchmark
 {
@@ -17,7 +16,10 @@ namespace GrpcBenchmark
     public class GrpcClient : IGrpcClient
     {
         private GrpcChannel channel;
-        private static GreeterClient client;
+        private GreeterClient client;
+
+        private GrpcChannel channelMovie;
+        private MovieServiceClient movieClient;
 
         /// <summary>
         /// Install certificate dotnet dev-certs https --trust
@@ -28,6 +30,7 @@ namespace GrpcBenchmark
         [GlobalSetup]
         public void Setup()
         {
+            // If you don't generate certificate -> use this code
             //var httpHandler = new HttpClientHandler();
             //// Return `true` to allow certificates that are untrusted/invalid
             //httpHandler.ServerCertificateCustomValidationCallback =
@@ -35,6 +38,9 @@ namespace GrpcBenchmark
 
             channel = GrpcChannel.ForAddress("https://localhost:5001"); // new GrpcChannelOptions { HttpHandler = httpHandler }
             client = new Greeter.GreeterClient(channel);
+
+            channelMovie = GrpcChannel.ForAddress("https://localhost:5001"); // new GrpcChannelOptions { HttpHandler = httpHandler }
+            movieClient = new MovieServiceClient(channelMovie);
         }
 
         [GlobalCleanup]
@@ -46,7 +52,18 @@ namespace GrpcBenchmark
         public async Task SayHello()
         {
             var reply = await client.SayHelloAsync(new HelloRequest { Name = "World" });
-            //Console.WriteLine("Greeting: " + reply.Message);
+        }
+
+        [Benchmark]
+        public async Task GrpcMovie()
+        {
+            var response = await movieClient.GetMovieAsync(new MovieRequest());
+        }
+
+        [Benchmark]
+        public async Task GrpcMovies()
+        {
+            var response = await movieClient.GetMoviesAsync(new MovieRequest());
         }
     }
 }
