@@ -1,0 +1,11 @@
+language: csharp
+dist: xenial
+sudo: required
+solution: PerformanceImprovements.sln
+mono: none
+dotnet: 5.0
+
+script:
+ - dotnet --version
+ - dotnet restore
+ - dotnet build
