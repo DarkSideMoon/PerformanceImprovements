@@ -23,7 +23,7 @@ namespace HttpCompletionOptionBenchmark
     public class MovieClient : IMovieClient
     {
         private const string BaseMovieUrl = "http://localhost:5000/";
-        private const string GetMovieUrl = "movie";
+        private const string GetMovieUrl = "Performance/movies";
 
         private HttpClient _httpClient;
 
@@ -76,7 +76,7 @@ namespace HttpCompletionOptionBenchmark
             }
         }
 
-        [Benchmark]
+        //[Benchmark]
         public async Task GetMovieAsyncWithoutHttpCompletionOptionNewtonsoft()
         {
             var response = await _httpClient.GetAsync(GetMovieUrl);
@@ -93,7 +93,7 @@ namespace HttpCompletionOptionBenchmark
             }
         }
 
-        [Benchmark]
+        //[Benchmark]
         public async Task GetMovieAsyncWithHttpCompletionOptionNewtonsoft()
         {
             var response = await _httpClient.GetAsync(GetMovieUrl, HttpCompletionOption.ResponseHeadersRead);
